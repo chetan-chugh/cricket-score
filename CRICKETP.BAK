@@ -1,0 +1,225 @@
+#include<iostream.h>
+#include<conio.h>
+#include<string.h>
+class cricketMatch{
+  char team1[5],team2[5];
+  int over;
+  public:
+  void details();
+  void toss();
+};
+
+//Match details
+void cricketMatch::details(){
+    clrscr();
+    cout<<"Teams\n";
+    cout<<"----------------------------\n";
+    cout<<"Enter Team 1:";
+    cin>>team1;
+    cout<<"Enter Team 2:";
+    cin>>team2;
+    cout<<"Over?\n";
+    cin>>over;
+    /*over=getche();
+    cout<<over;
+    cout<<"\n\n\tPlease any key for continue...";*/
+    toss();
+}
+
+//toss
+void cricketMatch::toss(){
+    char toss,opted;
+    clrscr();
+    cout<<"\t\t\t\tTOSS TIME\n";
+    cout<<"\t\t\t\t---------\n";
+    cout<<"\n\t\t\tPress team number which won the toss:";
+    toss=getche();
+    cout<<"\n\n\nPress 1 if they choose to bat first";
+    cout<<"\tPress 2 if they choose to bowl first";
+    opted=getch();
+    if(toss=='1' && opted=='1')
+      cout<<"\n\n\n\t"<<team1<<" won the toss and they will choose to bat first";
+    else if(toss=='1' && opted=='2')
+      cout<<"\n\n\n\t"<<team1<<" won the toss and they will choose to bowl first";
+    else if(toss=='2' && opted=='1')
+     cout<<"\n\n\n\t"<<team2<<" won the toss and they will choose to bat first";
+    else if(toss=='2' && opted=='2')
+      cout<<"\n\n\n\t"<<team2<<" won the toss and they will choose to bowl first";
+    cout<<"\n\n\n\n\tPRESS ANY KEY FOR START THE MATCH...";
+    getch();
+}
+
+class matchStart:public cricketMatch
+{
+  int i,score,wicket,player1Run,player2Run,bowlerRun,player1Ball,player2Ball,strike;
+  char player1[20],player2[20],bowler[20];
+  float over,bowlerOver;
+  public:
+  matchStart(){
+    score=0;
+    wicket=0;
+    player1Run=0;
+    player2Run=0;
+    bowlerRun=0;
+    over=0.0f;
+    bowlerOver=0.0f;
+    player1Ball=0;
+    player2Ball=0;
+    strike=1;
+
+  }
+  void openingPair();
+  void bowlerName();
+  void a();
+  void liveScore();
+};
+
+void matchStart::a(){
+    int i=1;
+    while(i<=7){
+      liveScore();
+      i++;
+    }
+}
+
+void matchStart::openingPair(){
+    clrscr();
+    cout<<"\t\t\tSelect Opening Players\n";
+    cout<<"\t\t\t----------------------\n";
+    cout<<"Enter Batsman\n";
+    cout<<"-------------\n\n";
+    cout<<"\nStriker\n";
+    cout<<"-------\n";
+    cin>>player1;
+    cout<<"\nNon-striker\n";
+    cout<<"----------\n";
+    cin>>player2;
+}
+
+void matchStart::bowlerName(){
+    cout<<"\n\nEnter Bowler name:\n";
+    cout<<"-----------------\n";
+    cin>>bowler;
+    cout<<"\n\n\tPlease any key for continue...";
+    getch();
+}
+
+void matchStart::liveScore(){
+  char run;
+  clrscr();
+  cout<<"\t\t\t\tTotal score\n";
+  cout<<"\t\t\t\t-----------\n";
+  cout<<score<<" - "<<wicket<<"("<<over<<")\n\n";
+  cout<<"Batsman\t\tR\t\tB";
+  cout<<"\n-------------------------------------------\n";
+  cout<<player1<<"\t\t"<<player1Run<<"\t\t"<<player1Ball<<"\n\n";
+  cout<<player2<<"\t\t"<<player2Run<<"\t\t"<<player2Ball<<"\n\n\n\n";
+  cout<<"Bowler\t\tO\t\tR";
+  cout<<"\n--------------------------------------------\n";
+  cout<<bowler<<"\t\t"<<bowlerOver<<"\t\t"<<bowlerRun;
+  //cout<<"\n\nThis Over:\t\t";
+  cout<<"\n\nPress the following number:\n";
+  cout<<"0\t1\t2\t3\t4\t5\t6";
+  run=getch();
+  if(run=='0'){
+      if(strike==1)
+	player1Ball+=1;
+      else if(strike==2)
+	player2Ball+=1;
+  }
+
+  else if(run=='1'){
+      if(strike==1){
+	player1Run+=1;
+	player1Ball+=1;
+	strike=2;
+      }
+      else if(strike==2){
+	player2Run+=1;
+	player2Ball+=1;
+	strike=1;
+      }
+      score+=1;
+      bowlerRun+=1;
+  }
+
+  else if(run=='2'){
+    if(strike==1){
+	player1Run+=2;
+	player1Ball+=1;
+	strike=1;
+      }
+
+      else if(strike==2){
+	player2Run+=2;
+	player2Ball+=1;
+	strike=2;
+      }
+      score+=2;
+      bowlerRun+=2;
+  }
+
+  else if(run=='3'){
+    if(strike==1){
+	player1Run+=3;
+	player1Ball+=1;
+	strike=2;
+      }
+      else if(strike==2){
+	player2Run+=3;
+	player2Ball+=1;
+	strike=1;
+      }
+      score+=3;
+      bowlerRun+=3;
+  }
+
+  else if(run=='4'){
+    if(strike==1){
+	player1Run+=4;
+	player1Ball+=1;
+	strike=1;
+      }
+
+
+      else if(strike==2){
+	player2Run+=4;
+	player2Ball+=1;
+	strike=2;
+      }
+      score+=4;
+      bowlerRun+=4;
+  }
+
+  else if(run=='6'){
+    if(strike==1){
+	player1Run+=6;
+	player1Ball+=1;
+	strike=1;
+      }
+
+      else if(strike==2){
+	player2Run+=6;
+	player2Ball+=1;
+	strike=2;
+      }
+      bowlerRun+=6;
+      score+=6;
+  }
+
+  else
+    cout<<"Enter invalid number";
+
+  over+=0.1;
+  bowlerOver+=0.1;
+}
+
+int main()
+{
+  matchStart match;
+  match.details();
+  match.openingPair();
+  match.bowlerName();
+  match.a();
+  return 0;
+}
